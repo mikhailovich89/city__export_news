@@ -6,37 +6,91 @@ header('Content-Type: text/html; charset=utf-8');
 <div class="t-container news_container">
 
 
-  <?php
+	<?php
 
   //Ключевое слово для отладки
-  $rubricName = "открытый университет образование";
+	$rubricName = "открытый университет образование";
 
 
 
   //Опции для функции stream_context_create();
-  $contextOptions = array (
-    "ssl" => array (
-      "verify_peer" => false,
-      "verify_peer_name" => false
-    )
-  );
+	$contextOptions = array (
+		"ssl" => array (
+			"verify_peer" => false,
+			"verify_peer_name" => false
+		)
+	);
   //Путь к json
-  $jsonPath = 'https://news.sfu-kras.ru/json/city';
+	$jsonPath = 'https://news.sfu-kras.ru/json/city';
   //Получение содержимого json
-  $jsonSelf = file_get_contents($jsonPath, false, stream_context_create($contextOptions));
+	$jsonSelf = file_get_contents($jsonPath, false, stream_context_create($contextOptions));
   //Преобразование json в удобоиспользуемый вид
-  $jsonCvt = json_decode($jsonSelf, true);
+	$jsonCvt = json_decode($jsonSelf, true);
   // Определяем ключевое слово для проверки
-  $keyWord = $rubricName;
-  // Определяем длинну массива
-  $arrLength = count($jsonCvt['items']);
-  // Организуем цикл
-  for ($i=0; $i < $arrLength; $i++) {
-    //Осуществляем вывод массива по условию
-    if (in_array($keyWord, $jsonCvt['items'][$i]['tags'])) {
-      echo "<pre>";
-      print_r($jsonCvt['items'][$i]);
-      echo "</pre>";
+	$keyWord = $rubricName;
+  // Определяем длинну массива элементов, каждый из которых содержит данные для формирования новости
+	$arrLength = count($jsonCvt['items']);
+  // Отладка
+	var_dump($arrLength);
+	
+  // Обходим массив элементов в цикле
+	for ($i=0; $i < $arrLength; $i++) {
+  	// Если тэги массива для формирования новости содержат ключевое слово, то работаем с ним, то есть формирование новости производим из него
+		if (in_array($keyWord, $jsonCvt['items'][$i]['tags'])) {
+    	//Отладка
+			echo "<pre>";
+			print_r($jsonCvt['items'][$i]['tags']);
+			echo "</pre>";
+      	// Находим ключ строки по вхождению подстроки в эту строку
+      	// Для этого обходим тэги
+			foreach ($jsonCvt['items'][$i]['tags'] as $key => $value) {
+      		// Если значение элемента тега содержит вхождение подстроки, то работаем с ним
+				if (strstr($value, 'date')) {
+    			// Присваиваем в переменную значение строки, найденное по ключу
+					$str = $jsonCvt['items'][$i]['tags'][$key];
+    			// Парсим строку с помощью функции в результате получаем переменную со значением
+					parse_str($str);
+    			//Отладеа
+					echo "<pre>";
+					print_r($date);
+					echo "</pre>";
+				}
+			}
+
+
+      // array_keys($array, value) Возвращает ключ(и) массива по значению
+      // array_search(value, $array) Возвращает ключ первого найденного элемента по значению
+      // in_array(valie, $array) Возвращает true если значение было найдено в массиве
+      // array_values($array) Возвращает заново индексированный массив значений
+      // array_walk($array, 'function') Применяет функцию к каждому элементу массива
+      // count($array) Подсчитывает количество элементов массива или чего-либо в объекте
+      // current($array) Возвращает текущий элемент массива
+      // next($array) Возвращает следующий элемент массива
+      // prev($array) Возвращает предыдущий элемент массива
+      // end($array) Возвращает последний элемент массива
+      // key($array) Возвращает индекс текущего элемента массива
+
+      // explode(delimiter, string) Разбивает строку с помощью разделителя!
+      // parse_str() // Разбирает строку в переменные
+      // stripos(haystack, needle) Возвращает позицию первого вхождения подстроки без учета регистра
+      // strpos(haystack, needle) Возвращает позицию первого вхождения подстроки
+      // strlen(string) Возвращает длинну строки
+      // strstr(haystack, needle) Находит первое вхождение подстроки
+
+
+
+
+
+
+      //Сначала найти, а потом взорвать
+
+
+
+
+
+
+
+
       /*
   ?>
 
@@ -59,7 +113,7 @@ header('Content-Type: text/html; charset=utf-8');
   </div>
   -->
 
-  <?php */}} ?>
+<?php */}} ?>
 
 </div>
 
@@ -83,5 +137,5 @@ header('Content-Type: text/html; charset=utf-8');
     .news_container {
       column-count: 3;
     }
-  }*/
+    }*/
 </style>
