@@ -30,7 +30,6 @@ $context_options = array (
 );
 
 $json_path = 'https://news.sfu-kras.ru/json/city';
-// Получение содержимого json
 $json = file_get_contents($json_path, false, stream_context_create($context_options));
 // Преобразование json в удобоиспользуемый вид
 $arr_news = json_decode($json, true);
