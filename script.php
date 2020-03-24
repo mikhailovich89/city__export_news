@@ -20,10 +20,8 @@ header('Content-Type: text/html; charset=utf-8');
 //    !Если указанная в ключевом слове дата больше текущей, новость будет отображаться
 // 3. Таким образом, новость будет отображаться в соответствующей рубрике, если указано ключевое слово и дата больше текущей
 
-// Ключевое слово для отладки
 $rubric_name = "открытый университет образование";
 
-// Опции для функции stream_context_create();
 $context_options = array (
 	"ssl" => array (
 		"verify_peer" => false,
@@ -31,7 +29,6 @@ $context_options = array (
 	)
 );
 
-//Путь к json
 $json_path = 'https://news.sfu-kras.ru/json/city';
 // Получение содержимого json
 $json = file_get_contents($json_path, false, stream_context_create($context_options));
