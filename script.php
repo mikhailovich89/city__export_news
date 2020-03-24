@@ -30,17 +30,33 @@ header('Content-Type: text/html; charset=utf-8');
 	$keyWord = $rubricName;
   // Определяем длинну массива элементов, каждый из которых содержит данные для формирования новости
 	$arrLength = count($jsonCvt['items']);
+  // Текущая дата
+  $current_time = date('dmY');
   // Отладка
 	var_dump($arrLength);
+
+
+  // echo "<pre>";
+  // print_r($current_time);
+  // echo "</pre>";
+
+
+
+
+
+
+
+
+
 	
   // Обходим массив элементов в цикле
 	for ($i=0; $i < $arrLength; $i++) {
   	// Если тэги массива для формирования новости содержат ключевое слово, то работаем с ним, то есть формирование новости производим из него
 		if (in_array($keyWord, $jsonCvt['items'][$i]['tags'])) {
     	//Отладка
-			echo "<pre>";
-			print_r($jsonCvt['items'][$i]['tags']);
-			echo "</pre>";
+			// echo "<pre>";
+			// print_r($jsonCvt['items'][$i]['tags']);
+			// echo "</pre>";
       	// Находим ключ строки по вхождению подстроки в эту строку
       	// Для этого обходим тэги
 			foreach ($jsonCvt['items'][$i]['tags'] as $key => $value) {
@@ -51,11 +67,14 @@ header('Content-Type: text/html; charset=utf-8');
     			// Парсим строку с помощью функции в результате получаем переменную со значением
 					parse_str($str);
     			//Отладеа
-					echo "<pre>";
-					print_r($date);
-					echo "</pre>";
-				}
-			}
+					// echo "<pre>";
+					// print_r($date);
+					// echo "</pre>";
+          if ($date > $current_time) {
+            // echo "<pre>";
+            // print_r($jsonCvt['items'][$i]); // Этот адрес и будет материалом для формирования новости
+            // echo "</pre>";
+
 
 
       // array_keys($array, value) Возвращает ключ(и) массива по значению
@@ -84,6 +103,7 @@ header('Content-Type: text/html; charset=utf-8');
 
       //Сначала найти, а потом взорвать
 
+      //date_parse_from_format(format, date) // Получение массива от даты, заданной в определенном формате
 
 
 
@@ -91,10 +111,10 @@ header('Content-Type: text/html; charset=utf-8');
 
 
 
-      /*
+
+
   ?>
 
-  <!--Вывод новости
   <div class="t649__col t-col t-col_4 t-align_left t-item news_item">
     <a class="t649__linkwrapper" href="<?php echo $jsonCvt['items'][$i]['link'] ?>" target="_blank">
       <div class="t649__blockimg t649__blockimg_3-2 t-bgimg" data-original="<?php echo $jsonCvt['items'][$i]['poster'] ?>" style="background: url(&#39;static/08393c30a3e0be1cdffa12659f39828b_2019.jpg&#39;) center center no-repeat; background-size:cover; margin: -6px;">
@@ -111,9 +131,8 @@ header('Content-Type: text/html; charset=utf-8');
       </div>
     </a>
   </div>
-  -->
 
-<?php */}} ?>
+<?php }}}}} ?>
 
 </div>
 
